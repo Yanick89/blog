@@ -11,7 +11,7 @@ export interface IsNote {
     id: string,
     title: string,
     content: string
-    date: string,
+    date: Date,
     img: string,
     view: string
 }

@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Counter from './lib/Counter.svelte'
   import { UseTableData } from './table'
   import Blogs from './lib/blogs.svelte'
   import "../index.css"
@@ -27,10 +26,11 @@
     title = ''
     
   }
+  
 </script>
 
 <main>
-
+    <a href="/lecture">Test</a>
   <div class="w-full max-w-2xl mx-6 mt-5 md:mx-auto">    
     <form>
       <div class="w-full mb-4 border border-gray-200 rounded bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
