@@ -9,12 +9,16 @@
 	export let img: string;
 	export let view: string;
 
+  export let url = "";
+
   const direction = () => {
     window.location.href = `/blog/${id}`
   }
 </script>
 
-<article class="flex flex-col dark:bg-gray-900" on:click={direction}>
+<Router {url}>
+<Link to="/blog/{id}">
+<article class="flex flex-col dark:bg-gray-900">
   <a rel="noopener noreferrer" href="#" aria-label="Te nulla oportere reprimique his dolorum">
     <img alt="" class="object-cover w-full h-52 dark:bg-gray-500" src={img}>
   </a>
@@ -28,8 +32,8 @@
     </div>
   </div>
 </article>
-
-
-<Route path="/blog/:id" let:params>
-  <BlogId id="{params.id}"/>
+</Link>
+<Route path="/blog/{id}">
+  <BlogId/>
 </Route>
+</Router>
