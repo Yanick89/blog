@@ -1,13 +1,20 @@
 <script lang="ts">
+  import BlogId from '../routes/blog/[blogId].svelte';
+  import { Router, Link, Route } from "svelte-routing";
+
   export let id: string;
 	export let title: string;
 	export let content: string;
 	export let date: string;
 	export let img: string;
 	export let view: string;
+
+  const direction = () => {
+    window.location.href = `/blog/${id}`
+  }
 </script>
 
-<article class="flex flex-col dark:bg-gray-900">
+<article class="flex flex-col dark:bg-gray-900" on:click={direction}>
   <a rel="noopener noreferrer" href="#" aria-label="Te nulla oportere reprimique his dolorum">
     <img alt="" class="object-cover w-full h-52 dark:bg-gray-500" src={img}>
   </a>
@@ -21,3 +28,8 @@
     </div>
   </div>
 </article>
+
+
+<Route path="/blog/:id" let:params>
+  <BlogId id="{params.id}"/>
+</Route>
