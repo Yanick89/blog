@@ -1,6 +1,6 @@
 <script lang="ts">
   import Blog from "./routes/blog/blog.svelte"
-  import Page from "./routes/blog/page.svelte";
+  import Page from "./routes/page.svelte";
   import Header from "./lib/Header.svelte";
   import "../index.css"
   import { Router, Link, Route } from "svelte-routing";
