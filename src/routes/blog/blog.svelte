@@ -15,9 +15,6 @@
     
     import { onMount } from 'svelte';
 
-    
-    let content: any = null;
-
     const DEFAULT_INITIAL_DATA =  {
         "time": new Date().getTime(),
         "blocks": [
@@ -114,11 +111,9 @@
         autofocus: true,
         data: DEFAULT_INITIAL_DATA,
         onChange: async () => {
-            content = await editor.saver.save();
+           let content = await editor.saver.save();
         }
     });
-
-    console.log(content);
 </script>
 
 <div id='editorjs'></div>
