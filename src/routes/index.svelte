@@ -1,7 +1,7 @@
 <script lang="ts">
     import { UseTableData } from '../table'
     import Blogs from '../lib/blogs.svelte'
-    import Blog from './blog/blog.svelte'
+    import Blog from './posts/blog.svelte'
 
   let message: string = '',
       newMessage: string = '',
