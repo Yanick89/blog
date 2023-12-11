@@ -5,13 +5,13 @@
     const { blogs } = UseTableData();
     let postBlogs: any = {}
 
-    const posts  = blogs.filter( post =>{
+    const posts:Array<object> = blogs.filter( post =>{
         if(post.id === id){
             return post
         }
-    })
-    posts.forEach((post)=>{ postBlogs = post
-    })
+    });
+    
+    posts.forEach((post)=>{ postBlogs = post })
     
 </script>
 
