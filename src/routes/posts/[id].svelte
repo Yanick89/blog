@@ -29,6 +29,19 @@
 
 <div class="read-post">
     <article class="flow">
+        <div class="flex items-center gap-4">
+            <img src="https://source.unsplash.com/43x43/?user?1" alt="photo profil" class="w-10 h-10 bg-slate-600 rounded-full">
+            <div class="">
+                <span class="self-center text-xl font-medium">by Leroy Jenkins</span>
+                <div class="flex items-center justify-between">
+                    <div class="flex space-x-2 ">
+                        <span class="self-center text-sm text-slate-500">Dec 7· 4 min</span>
+                    </div>
+                    <span class="text-xs text-slate-500">3 min read</span>
+                </div>
+            </div>
+        </div>
+        <hr>
         <h1>{postBlogs.title}</h1>
         <img src={postBlogs.img} alt="" class="w-full rounded-md">
         {@html postBlogs.content}

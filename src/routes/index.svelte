@@ -30,7 +30,6 @@
     }
     blogs = [note, ...blogs]  
     title = ''
-    
   }
 </script>
 
