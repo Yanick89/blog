@@ -6,15 +6,18 @@
     let postBlogs: any = {},
         allPosts: any = [];
 
-        allPosts = [...blogs, ...ListsCurrent, ...ListsTop]    
-        console.log('succefull',allPosts);
+    // on ajoute tous les tableaux dans un seul qui est destructuré
+    allPosts = [...blogs, ...ListsCurrent, ...ListsTop]    
     
-    const posts:Array<object> = allPosts.filter( post =>{
+    // On filtre le tableau qui contient tous les autres tableaux pour ensuite verifier le ID qui conrespond
+    // On definit en paramètre le type de données
+    const posts:Array<object> = allPosts.filter((post:{id: string, title: string, content: string, date: string, img: string, view: string})=>{
             if(post.id === id){
             return post
         }
     });
-    
+
+    // Une fois ID trouver, on parcours le tableau et on affecte à iteration dans un objet
     posts.forEach((post)=>{ postBlogs = post })
 
 </script>

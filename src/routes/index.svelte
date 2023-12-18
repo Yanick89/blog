@@ -134,7 +134,6 @@
             </div>
             <div class="grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-4">
                 {#each blogs as blog} 
-                    <!-- <Blogs {...blog} />  -->
                     <Blogs {...blog}>
                         <article class="flex flex-col dark:bg-gray-900">
                             <a rel="noopener noreferrer" href="#" aria-label="Te nulla oportere reprimique his dolorum">
@@ -157,7 +156,6 @@
     </section> 
     <div class="article flex gap-16">
         <div class="list-md flex-1">    
-            <!-- <CurrentList {current} /> -->
             {#each ListsCurrent as regular}    
                 <Blogs {...regular}>
                     <div class="dark:bg-gray-800 dark:text-gray-50 list-left">
@@ -188,7 +186,6 @@
                 </Blogs>
             {/each}
         </div>
-        <!-- <Top /> -->
         <div class="list-sm basis-2/5 sticky">
             {#each ListsTop as top, index }
                 <Blogs {...top}>

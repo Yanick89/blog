@@ -7,15 +7,6 @@ export interface IsBlogs {
     view: string
 }
 
-export interface IsNote {
-    id: string,
-    title: string,
-    content: string
-    date: Date,
-    img: string,
-    view: string
-}
-
 export function UseTableData () {
     const blogs = <IsBlogs[]> [
         {
