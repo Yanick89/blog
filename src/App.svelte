@@ -3,6 +3,7 @@
   import Posts from './routes/posts/[id].svelte'
   import Page from "./routes/index.svelte";
   import Header from "./lib/Header.svelte";
+  import Register from "./routes/register.svelte";
   import "../index.css"
   import { Router, Route } from "svelte-routing";
 
@@ -14,6 +15,7 @@
   <Header />
     <div>
       <Route path="/blog" component={Blog} />
+      <Route path="/register" component={Register} />
       <Route path="/" component={Page} />
     </div>
     <div>
