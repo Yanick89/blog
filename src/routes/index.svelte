@@ -33,7 +33,8 @@
   }
 </script>
 
-<main>        
+<main>       
+     
     <div class="w-full max-w-2xl mx-6 mt-5 md:mx-auto">    
         <form>
             <div class="w-full mb-4 border border-gray-200 rounded bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
