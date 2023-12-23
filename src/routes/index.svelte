@@ -2,9 +2,9 @@
     // importations
     import { UseTableData } from '../table'
     import Blogs from '../lib/blogs.svelte'
-    import Top from '../lib/blog/topList.svelte';
-    import CurrentList from '../lib/blog/currentList.svelte';
-    import Blog from './posts/blog.svelte'
+    // import Top from '../lib/blog/topList.svelte';
+    // import CurrentList from '../lib/blog/currentList.svelte';
+    // import Blog from './posts/blog.svelte'
 
     // declarations
   let message: string = '',
