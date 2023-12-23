@@ -6,6 +6,12 @@ export interface IsBlogs {
     img: string,
     view: string
 }
+export interface User{
+  id: string,
+  imageUrl: string,
+  name: string,
+  userName: string
+}
 
 export function UseTableData () {
     const blogs = <IsBlogs[]> [

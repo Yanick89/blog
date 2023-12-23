@@ -154,7 +154,7 @@
             </div>
         </div>
     </section> 
-    <div class="article flex gap-16">
+    <div class="article flex flex-col md:flex-row gap-16">
         <div class="list-md flex-1">    
             {#each ListsCurrent as regular}    
                 <Blogs {...regular}>
@@ -186,20 +186,20 @@
                 </Blogs>
             {/each}
         </div>
-        <div class="list-sm basis-2/5 sticky">
+        <div class="list-sm basis-[100%] md:basis-2/5 sticky lg:w-full lg:h-full lg:bg-gradient-to-r lg:from-gray-50 lg:via-transparent lg:to-transparent dark:from-slate-800">
             {#each ListsTop as top, index }
                 <Blogs {...top}>
-                    <div class="">
+                    <div class="px-6 lg:px-10 py-4">
                         <div class="flex items-start">
-                            <span>{index + 1}</span>
-                            <div class="flex justify-start px-6 lg:px-10 lg:py-2">
+                            <span class="font-bold text-2xl text-slate-300 -mt-2">{index + 1}</span>
+                            <div class="flex justify-start lg:py-2">
                                 <svg width="28" height="29" viewBox="0 0 28 29" fill="none" class="ji ah"><path fill="#fff" d="M0 .8h28v28H0z"></path><g opacity="0.8" clip-path="url(#trending_svg__clip0)"><path fill="#fff" d="M4 4.8h20v20H4z"></path><circle cx="14" cy="14.79" r="9.5" stroke="#000"></circle><path d="M5.46 18.36l4.47-4.48M9.97 13.87l3.67 3.66M13.67 17.53l5.1-5.09M16.62 11.6h3M19.62 11.6v3" stroke="#000" stroke-linecap="round"></path></g><defs><clipPath id="trending_svg__clip0"><path fill="#fff" transform="translate(4 4.8)" d="M0 0h20v20H0z"></path></clipPath></defs></svg>
                                 <span class="self-center text-sm  font-medium">Trending on Blog</span>
                             </div>
                         </div>
                         <div class="dark:bg-gray-800 dark:text-gray-50">
                             <div class="container grid grid-cols-12 mx-auto dark:bg-gray-900">
-                                <div class="flex flex-col px-6 col-span-full row-span-full lg:col-span-8 lg:py-2 lg:px-10">
+                                <div class="flex flex-col col-span-full row-span-full lg:col-span-8 lg:py-2">
                                     <div class="flex justify-start">
                                         <div class="flex space-x-2">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 dark:text-gray-400">
