@@ -2,9 +2,9 @@
     // importations
     import { UseTableData } from '../table'
     import Blogs from '../lib/blogs.svelte'
-    // import Top from '../lib/blog/topList.svelte';
-    // import CurrentList from '../lib/blog/currentList.svelte';
-    // import Blog from './posts/blog.svelte'
+    import Top from '../lib/blog/topList.svelte';
+    import CurrentList from '../lib/blog/currentList.svelte';
+    import Blog from './posts/blog.svelte'
 
     // declarations
   let message: string = '',
@@ -159,8 +159,8 @@
             {#each ListsCurrent as regular}    
                 <Blogs {...regular}>
                     <div class="dark:bg-gray-800 dark:text-gray-50 list-left">
-                        <div class="container grid grid-cols-12 mx-auto dark:bg-gray-900">
-                            <div class="bg-no-repeat bg-cover dark:bg-gray-700 col-span-full lg:col-span-4 rounded-md" style:background-image= "url('{regular.img}')" style="background-position: center center; background-blend-mode: multiply; background-size: cover;"></div>
+                        <div class="container flex items-center mx-auto dark:bg-gray-900">
+                            <!-- <div class="bg-no-repeat bg-cover dark:bg-gray-700 col-span-full lg:col-span-4 rounded-md h-24 w-14" style:background-image= "url('{regular.img}')" style="background-position: center center; background-blend-mode: multiply; background-size: cover;"></div> -->
                             <div class="flex flex-col p-6 col-span-full row-span-full lg:col-span-8 lg:p-10">
                                 <div class="flex justify-start">
                                     <!-- <span class="px-2 py-1 text-xs rounded-full dark:bg-violet-400 dark:text-gray-900">Label</span> -->
@@ -181,6 +181,7 @@
                                     <span class="text-xs">3 min read</span>
                                 </div>
                             </div>
+                            <div class="bg-no-repeat bg-cover dark:bg-gray-700 col-span-full lg:col-span-4 rounded-md h-32 w-36" style:background-image= "url('{regular.img}')" style="background-position: center center; background-blend-mode: multiply; background-size: cover;"></div>
                         </div>
                     </div>
                 </Blogs>
