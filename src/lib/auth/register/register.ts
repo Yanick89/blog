@@ -16,9 +16,7 @@ const userRegister = (email:string, password:string, name:string) =>{
                 name: name,
                 userName: ''
             });
-            navigate(`/user/@${name}`, { replace: true });
-            // console.log('name: ', name);
-                        
+            navigate(`/user/@${name}`, { replace: true });         
         })
         .catch((error) => {
             const errorCode = error.code;

@@ -9,9 +9,6 @@
       
 </script>
 
-
-
-
 <!-- Hero -->
 <div class="relative overflow-hidden">
     <div class="mx-auto max-w-screen-md py-12 px-4 sm:px-6 md:max-w-screen-xl md:py-20 lg:py-32 md:px-8">
@@ -64,4 +61,4 @@
   <div class="hidden md:block md:absolute md:top-0 md:start-1/2 md:end-0 h-full bg-[url('https://images.unsplash.com/photo-1606868306217-dbf5046868d2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1981&q=80')] bg-no-repeat bg-center bg-cover"></div>
   <!-- End Col -->
 </div>
-  <!-- End Hero -->
+<!-- End Hero -->
