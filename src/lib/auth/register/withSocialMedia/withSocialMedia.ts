@@ -5,6 +5,7 @@ import { navigate } from "svelte-routing";
 
 
 let provider = new GoogleAuthProvider()
+provider.setCustomParameters({ prompt: 'select_account' });
 export const authSocialMedia = () =>{
     signInWithPopup(auth, provider)
     .then(async(result) => {
@@ -25,6 +26,5 @@ export const authSocialMedia = () =>{
         // Handle Errors here.
             const errorCode = error.code;
             const errorMessage = error.message;
-      });
-    
+      });    
 }

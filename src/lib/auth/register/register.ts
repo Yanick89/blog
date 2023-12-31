@@ -3,7 +3,8 @@ import { auth, db } from '../../firebase/firebase'
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { navigate } from "svelte-routing";
 
-export let name: string = ''
+export let name: string = '';
+export let id: string = ''
 
 export function Register() {
 const userRegister = (email:string, password:string, name:string) =>{
@@ -16,7 +17,7 @@ const userRegister = (email:string, password:string, name:string) =>{
                 name: name,
                 userName: ''
             });
-            navigate(`/user/@${name}`, { replace: true });         
+            navigate(`/user/${name}`, { replace: true });         
         })
         .catch((error) => {
             const errorCode = error.code;
