@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { authSocialMedia } from '../lib/auth/register/withSocialMedia/withSocialMedia'
+  import { authSocialMedia } from './auth/withSocialMedia/withSocialMedia'
 </script>
 
 <button on:click={authSocialMedia} type="submit" class="py-3 px-4 cursor-pointer  inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">

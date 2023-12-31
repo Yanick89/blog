@@ -1,8 +1,7 @@
-import { auth, db } from "../../../firebase/firebase";
+import { auth, db } from "../../firebase/firebase";
 import { doc, setDoc } from 'firebase/firestore';
 import { GoogleAuthProvider, signInWithPopup, linkWithPopup } from "firebase/auth";
 import { navigate } from "svelte-routing";
-
 
 let provider = new GoogleAuthProvider()
 provider.setCustomParameters({ prompt: 'select_account' });
@@ -19,8 +18,8 @@ export const authSocialMedia = () =>{
             name: user.displayName,
             userName: ''
         })
-        navigate("/user/profil", { replace: true });
-        console.log(user,'  TOKEN:  ', token);
+        const name = user.displayName?.replace(' ', '-')
+        navigate(`/user/${name}`, { replace: true });  
         
       }).catch((error) => {
         // Handle Errors here.

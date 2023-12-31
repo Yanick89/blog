@@ -4,10 +4,10 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { navigate } from "svelte-routing";
 
 export let name: string = '';
-export let id: string = ''
+export let userId: string = ''
 
 export function Register() {
-const userRegister = (email:string, password:string, name:string) =>{
+    const userRegister = (email:string, password:string, name:string) =>{
         createUserWithEmailAndPassword(auth, email, password)
         .then(async (data) => {
             const user = data.user;

@@ -16,7 +16,7 @@
       <div class="md:pe-8 md:w-1/2 xl:pe-0 xl:w-2/6">
         <!-- Title -->
         <h1 class="text-2xl my-5 text-center text-gray-800 font-bold md:text-3xl md:leading-tight lg:text-4xl lg:leading-tight dark:text-gray-200">
-          Rejoind-nous
+          Rejoind-nous sur SCIENCES-Ga
         </h1>
         <!-- End Title -->
   

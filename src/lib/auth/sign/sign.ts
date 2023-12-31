@@ -3,7 +3,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { navigate } from "svelte-routing";
 
 
-export function signIn(){
+export function sign(){
     const userSignIn = (email:string, password:string) =>{
         signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
@@ -15,8 +15,13 @@ export function signIn(){
             const errorCode = error.code;
             const errorMessage = error.message;
         });
+    };
+    const signOut = () =>{
+        auth.signOut();
+        navigate(`/`, { replace: true })
     }
     return{
-        userSignIn
+        userSignIn,
+        signOut
     }
 }

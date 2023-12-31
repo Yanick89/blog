@@ -20,7 +20,7 @@
       <Route path="/blog" component={Blog} />
       <Route path="/register" component={Register} />
       <Route path="/signIn" component={SignIn} />
-      <Route path="/user/profil" component={Profil} />
+      <Route path="/user/:name" component={Profil} />
       <Route path="/setting/edit-profil" component={EditProfil} />
       <Route path="/" component={Page} />
     </div>

@@ -12,7 +12,7 @@
       <div class="flex items-center justify-center sm:items-stretch sm:justify-start">
         <div class="flex flex-shrink-0 items-center">
           <Link to="/" class="flex items-center space-x-3 rtl:space-x-reverse">
-            <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Sciences</span>
+            <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Sciences-Ga</span>
           </Link>
         </div>
       </div>
@@ -70,7 +70,7 @@
   </div>
 </header>
 
-<!-- <Header /> -->
+<Header />
 
 
 

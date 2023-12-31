@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { signIn } from "../lib/auth/sign/signIn";
+  import { sign } from "../lib/auth/sign/sign";
   import { Link } from "svelte-routing";
   
     let email: string  ='',
         password: string = '',
-        { userSignIn } = signIn();
+        { userSignIn } = sign();
         
   </script>
   
