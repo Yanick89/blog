@@ -38,7 +38,7 @@
             </div>
         </article>
         <!-- waiting for api -->
-        <div class="text-gray-500 bg-gray-200 rounded-md px-3 py-2 text-sm font-medium mx-auto mt-4 w-3/4 text-center">Vous n'avez pas encore de blogs</div>
+        <div class="text-gray-500 bg-gray-200 rounded-md px-3 py-2 text-sm font-medium mx-auto mt-4 w-3/4 text-center">Vous n'avez pas encore de publication</div>
     </div>
     <div class="col-span-full bg-white border-l mx-auto h-screen basis-auto lg:basis-96 pt-3">     
         <Side />

@@ -1,26 +1,44 @@
-import { auth, db } from "../../firebase";
-import { getDocs, collection } from "firebase/firestore";
 
-let userInformation: any = {}
+import { auth, db } from "../../firebase"
+import { onAuthStateChanged } from "firebase/auth"
+import { getDocs, collection, doc, updateDoc } from "firebase/firestore"
+import type { User } from "../../../../table"
 
-const user = auth.currentUser;
-const getUserInfos = async () => {
-    if (user !== null) {
-        const uid = user.uid;
-        console.log('User informations: ', uid);
-        
-        // const querySnapshot = await getDocs(collection(db, "users"));
-        //   querySnapshot.forEach((doc) => {
-        //     const data = doc.data();
-        //     if (data.id === uid) {
-        //         userInformation = {...data};
-        //         console.log("Document data:", userInformation);                
-        //     }
-        // })
-      }
-    // return userInformation
+let userId: string
+
+export const getUser = () => {
+    return new Promise((resolve, reject) => {
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                userId = user.uid
+                const querySnapshot = await getDocs(collection(db, "users"))
+                let userData: User | null = null;
+                querySnapshot.forEach((doc) => {
+                    userData = doc.data() as User;
+                })
+
+                resolve(userData);
+            } else {
+                // Handle the case when there's no authenticated user
+                resolve(null);
+            }
+        }, (error) => {
+            // Handle errors from onAuthStateChanged
+            reject(error);
+        })
+    });
 }
 
-export{
-    getUserInfos
+export const updateUser = async (currentData: User, updateData: User) => {
+    // let name = currentData.name
+    updateData.name = currentData.name
+    updateData.userName = currentData.userName
+    updateData.imageUrl = currentData.imageUrl
+    updateData.aboutMe = currentData.aboutMe
+    updateData.linkedin = currentData.linkedin
+    updateData.facebook = currentData.facebook
+    updateData.twitterX = currentData.twitterX
+    updateData.youtube = currentData.youtube
+    const userRef =  doc(db, "users", userId);
+    await updateDoc(userRef, {...updateData})    
 }
