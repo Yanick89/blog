@@ -3,6 +3,8 @@
     import { getUser } from "../firebase/account/user/userInfos";
     import PhotoProfile from "./photoProfile.svelte";
 
+    export let obersveCounte: number
+
     // profile variables
     let name: string = '',
         userName: string ='',
@@ -21,13 +23,13 @@
         twitterX = user?.twitterX,
         youtube = user?.youtube
     })
+
      
 </script>
 
 
 <div class="w-full ml-5 flex flex-col items-start gap-y-3">
-    <div>   
-        {observeCount}
+    <div>  
         <div class="w-20 h-20">
             <PhotoProfile />
         </div>
@@ -38,7 +40,7 @@
         {/if}
     </div>
     <span class="text-slate-500 font-normal text-base ml-3">{name}</span>
-    <span class="text-slate-500 font-normal text-base ml-3">0 Publication</span>
+    <span class="text-slate-500 font-normal text-base ml-3">0 {obersveCounte}</span>
     <a href="/setting/edit-profil" class="text-gray-500 bg-gray-200 hover:bg-gray-300 hover:text-white rounded-md px-3 py-2 text-sm font-medium ml-3">Modifier</a>
     
     {#if youtube || linkedin || facebook || twitterX}

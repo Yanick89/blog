@@ -1,5 +1,10 @@
 <script lang="ts">
     import Side from "../../lib/account/side.svelte";
+    const watch = (count: number) =>{
+        return count > 0 ? 'Publications' : 'Publication'
+    }
+
+    $: obersveCounte = watch(0)
 </script>
 
 <div class="container w-full max-w-7xl px-2 sm:px-6 lg:px-8 mx-auto flex">
@@ -38,10 +43,10 @@
             </div>
         </article>
         <!-- waiting for api -->
-        <div class="text-gray-500 bg-gray-200 rounded-md px-3 py-2 text-sm font-medium mx-auto mt-4 w-3/4 text-center">Vous n'avez pas encore de publication</div>
+        <div class="text-gray-500 bg-gray-200 rounded-md px-3 py-2 text-sm font-medium mx-auto mt-4 w-3/4 text-center">Vous n'avez pas encore de {obersveCounte}</div>
     </div>
     <div class="col-span-full bg-white border-l mx-auto h-screen basis-auto lg:basis-96 pt-3">     
-        <Side />
+        <Side {obersveCounte} />
     </div>
 </div>
   
