@@ -1,92 +1,62 @@
 <script lang="ts">
-
-    import EditorJS from '@editorjs/editorjs';
+    import EditorJS from '@editorjs/editorjs'
     import Header from '@editorjs/header';
-    import ImageTool from '@editorjs/image';
-    import SimpleImage from "@editorjs/simple-image";
-    import List from '@editorjs/list';
     import Paragraph from '@editorjs/paragraph';
-    import LinkTool from '@editorjs/link';
-    import RawTool from '@editorjs/raw';
-    import Checklist from '@editorjs/checklist';
+    import SimpleImage from "@editorjs/simple-image";
+    import Checklist from '@editorjs/checklist'
+    import List from "@editorjs/list";
     import Quote from '@editorjs/quote';
-    import CodeTool from '@editorjs/code';
-    import Table from '@editorjs/table'
-    
+    import Warning from '@editorjs/warning';
+    import Delimiter from '@editorjs/delimiter';
+    import ToggleBlock from 'editorjs-toggle-block';
+    import NestedList from '@editorjs/nested-list';
+    import Table from '@editorjs/table';
+    import editorjsCodeflask from '@calumk/editorjs-codeflask';
+    import Marker from '@editorjs/marker';
+    import InlineCode from '@editorjs/inline-code';
+    import Underline from '@editorjs/underline';
+    import TextVariantTune from '@editorjs/text-variant-tune';
     import { onMount } from 'svelte';
 
-    const DEFAULT_INITIAL_DATA =  {
-        "time": new Date().getTime(),
-        "blocks": [
-            // {
-            //     "type": "image",
-            //     "data": {
-            //         "url": "https://www.tesla.com/tesla_theme/assets/img/_vehicle_redesign/roadster_and_semi/roadster/hero.jpg",
-            //         "caption": "Roadster // tesla.com",
-            //         "withBorder": false,
-            //         "withBackground": false,
-            //         "stretched": true
-            //     }
-            // },
-            // {
-            //     "type" : "linkTool",
-            //     "data" : {
-            //         "link" : "https://codex.so",
-            //         "meta" : {
-            //             "title" : "CodeX Team",
-            //             "site_name" : "CodeX",
-            //             "description" : "Club of web-development, design and marketing. We build team learning how to build full-valued projects on the world market.",
-            //             "image" : {
-            //                 "url" : "https://codex.so/public/app/img/meta_img.png"
-            //             }
-            //         }
-            //     }
-            // }
-        ]
-    }
+    let editor: any,
+        data: any = {
+            blocks: [
+                {
+                    type: 'header',
+                    data: {
+                        text: '',
+                        level: 2
+                    }
+                }
+            ]
+        };
     
-    let EditInstance: any;
-
-    $: ejInstance = EditInstance; 
-
-    const editor = new EditorJS({
-        holder: 'editorjs', 
-        tools:{
+        
+    onMount(() => {
+        editor = new EditorJS({
+        holder: 'editorjs',
+        tools: {
+            textVariant: TextVariantTune,
             image: SimpleImage,
-            header: Header,
-            raw: RawTool,
+            delimiter: Delimiter,
+            underline: Underline,
+            code : editorjsCodeflask,
+            header: {
+                class: Header,
+                inlineToolbar : true,
+                config: {
+                    level: [2, 3, 4],
+                    defaultLevel: 2
+                },
+            },
+            paragraph: {
+                class: Paragraph,
+                inlineToolbar: true,
+            },
             checklist: {
                 class: Checklist,
                 inlineToolbar: true,
-                },
-                quote: {
-                    class: Quote,
-                    inlineToolbar: true,
-                    shortcut: 'CMD+SHIFT+O',
-                    config: {
-                        quotePlaceholder: 'Enter a quote',
-                        captionPlaceholder: 'Quote\'s author',
-                    }
-                },
-                table: {
-                class: Table,
-                inlineToolbar: true,
-                    config: {
-                        rows: 2,
-                        cols: 3,
-                    }
-                },
-                code: CodeTool,
-            // image: {
-            //     class: ImageTool,
-            //     inlineToolbar: ['link'],
-            //     config: {
-            //         endpoints: {
-            //         byFile: 'http://localhost:8008/uploadFile', // Your backend file uploader endpoint
-            //         byUrl: 'http://localhost:8008/fetchUrl', // Your endpoint that provides uploading by Url
-            //         }
-            //     }
-            // },
+            },
             list: {
                 class: List,
                 inlineToolbar: true,
@@ -94,26 +64,72 @@
                     defaultStyle: 'unordered'
                 }
             },
-            linkTool: {
-                class: LinkTool,
+            quote: {
+                class: Quote,
+                inlineToolbar: true,
+                shortcut: 'CMD+SHIFT+O',
                 config: {
-                    endpoint: 'http://localhost:8008/fetchUrl', // Your backend endpoint for url data fetching,
-                }
+                    quotePlaceholder: 'Enter a quote',
+                    captionPlaceholder: 'Quote\'s author',
+                },
             },
-            paragraph: {
-                class: Paragraph,
+            warning: {
+                class: Warning,
+                inlineToolbar: true,
+                shortcut: 'CMD+SHIFT+W',
+                config: {
+                    titlePlaceholder: 'Title',
+                    messagePlaceholder: 'Message',
+                },
+            },
+            toggle: {
+                class: ToggleBlock,
                 inlineToolbar: true,
             },
+            table: {
+                class: Table,
+                inlineToolbar: true,
+                config: {
+                    rows: 2,
+                    cols: 3,
+                },
+            },
+            Marker: {
+                class: Marker,
+                shortcut: 'CMD+SHIFT+M',
+            },
+            inlineCode: {
+                class: InlineCode,
+                shortcut: 'CMD+SHIFT+M',
+            },
+            // list: {
+            //     class: NestedList,
+            //     inlineToolbar: true,
+            //     config: {
+            //         defaultStyle: 'unordered'
+            //     },
+            // }
+            
         },
-        // onReady: () => {
-        //     ejInstance.current = editor.current;
-        // },
-        autofocus: true,
-        data: DEFAULT_INITIAL_DATA,
-        onChange: async () => {
-           let content = await editor.saver.save();
-        }
-    });
+        tunes: ['textVariant'],
+        placeholder: 'Commence àcrire la publication ici!',
+        onReady: () => {console.log('Editor.js est prêt à commencer le taf')},
+        // onChange: (api, event) => {
+        //     console.log('Now I know that Editor\'s content changed!', event)
+        // }
+        data: data
+
+    })
+
+        editor.isReady
+        .then(() => {
+            console.log('Editor.js is ready to work!')
+            /** Do anything you need after editor initialization */
+        })
+        // .catch((reason) => {
+        //     console.log(`Editor.js initialization failed because of ${reason}`)
+        // });
+    })
 </script>
 
-<div id='editorjs'></div>
+<div id="editorjs"></div>

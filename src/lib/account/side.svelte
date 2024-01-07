@@ -3,7 +3,7 @@
     import { getUser } from "../firebase/account/user/userInfos";
     import PhotoProfile from "./photoProfile.svelte";
 
-    export let obersveCounte: number
+    export let obersveCounte: number;
 
     // profile variables
     let name: string = '',

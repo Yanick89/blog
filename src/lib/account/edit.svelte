@@ -27,7 +27,7 @@
             youtube: ''
         }
 
-    getUser().then((user: any) => {
+    getUser().then((user: User) => {
         datasUser.name = user?.name,
         datasUser.userName = user?.userName,
         datasUser.imageUrl = user?.imageUrl,
