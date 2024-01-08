@@ -15,7 +15,9 @@
     import Marker from '@editorjs/marker';
     import InlineCode from '@editorjs/inline-code';
     import Underline from '@editorjs/underline';
+    import CodeTool from '@editorjs/code';
     import TextVariantTune from '@editorjs/text-variant-tune';
+    import Embed from '@editorjs/embed';
     import { onMount } from 'svelte';
 
     let editor: any,
@@ -30,96 +32,115 @@
                 }
             ]
         };
-    
         
-    onMount(() => {
+    // onMount(() => {
         editor = new EditorJS({
-        holder: 'editorjs',
-        tools: {
-            textVariant: TextVariantTune,
-            image: SimpleImage,
-            delimiter: Delimiter,
-            underline: Underline,
-            code : editorjsCodeflask,
-            header: {
-                class: Header,
-                inlineToolbar : true,
-                config: {
-                    level: [2, 3, 4],
-                    defaultLevel: 2
+            holder: 'editorjs',
+            autofocus: true,
+            tools: {
+                textVariant: TextVariantTune,
+                image: SimpleImage,
+                delimiter: Delimiter,
+                underline: Underline,
+                // code : editorjsCodeflask,
+                code: CodeTool,
+                header: {
+                    class: Header,
+                    inlineToolbar : true,
+                    config: {
+                        level: [2, 3, 4],
+                        defaultLevel: 2
+                    },
                 },
-            },
-            paragraph: {
-                class: Paragraph,
-                inlineToolbar: true,
-            },
-            checklist: {
-                class: Checklist,
-                inlineToolbar: true,
-            },
-            list: {
-                class: List,
-                inlineToolbar: true,
-                config: {
-                    defaultStyle: 'unordered'
-                }
-            },
-            quote: {
-                class: Quote,
-                inlineToolbar: true,
-                shortcut: 'CMD+SHIFT+O',
-                config: {
-                    quotePlaceholder: 'Enter a quote',
-                    captionPlaceholder: 'Quote\'s author',
+                paragraph: {
+                    class: Paragraph,
+                    inlineToolbar: true,
                 },
-            },
-            warning: {
-                class: Warning,
-                inlineToolbar: true,
-                shortcut: 'CMD+SHIFT+W',
-                config: {
-                    titlePlaceholder: 'Title',
-                    messagePlaceholder: 'Message',
+                checklist: {
+                    class: Checklist,
+                    inlineToolbar: true,
                 },
-            },
-            toggle: {
-                class: ToggleBlock,
-                inlineToolbar: true,
-            },
-            table: {
-                class: Table,
-                inlineToolbar: true,
-                config: {
-                    rows: 2,
-                    cols: 3,
+                list: {
+                    class: List,
+                    inlineToolbar: true,
+                    config: {
+                        defaultStyle: 'unordered'
+                    }
                 },
+                quote: {
+                    class: Quote,
+                    inlineToolbar: true,
+                    shortcut: 'CMD+SHIFT+O',
+                    config: {
+                        quotePlaceholder: 'Enter a quote',
+                        captionPlaceholder: 'Quote\'s author',
+                    },
+                },
+                warning: {
+                    class: Warning,
+                    inlineToolbar: true,
+                    shortcut: 'CMD+SHIFT+W',
+                    config: {
+                        titlePlaceholder: 'Title',
+                        messagePlaceholder: 'Message',
+                    },
+                },
+                toggle: {
+                    class: ToggleBlock,
+                    inlineToolbar: true,
+                },
+                table: {
+                    class: Table,
+                    inlineToolbar: true,
+                    config: {
+                        rows: 2,
+                        cols: 3,
+                    },
+                },
+                Marker: {
+                    class: Marker,
+                    shortcut: 'CMD+SHIFT+M',
+                },
+                inlineCode: {
+                    class: InlineCode,
+                    shortcut: 'CMD+SHIFT+M',
+                },
+                embed: {
+                    class: Embed,
+                    inlineToolbar: true,
+                    config: {
+                        services: {
+                            youtube: true,
+                            coub: true,
+                            // codepen: {
+                            //     regex: /https?:\/\/codepen.io\/([^\/\?\&]*)\/pen\/([^\/\?\&]*)/,
+                            //     embedUrl: 'https://codepen.io/<%= remote_id %>?height=300&theme-id=0&default-tab=css,result&embed-version=2',
+                            //     html: "<iframe height='300' scrolling='no' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'></iframe>",
+                            //     height: 300,
+                            //     width: 600,
+                            //     id: (groups) => groups.join('/embed/')
+                            // }
+                        }
+                    }
+                },
+                // list: {
+                //     class: NestedList,
+                //     inlineToolbar: true,
+                //     config: {
+                //         defaultStyle: 'unordered'
+                //     },
+                // }
+                
             },
-            Marker: {
-                class: Marker,
-                shortcut: 'CMD+SHIFT+M',
-            },
-            inlineCode: {
-                class: InlineCode,
-                shortcut: 'CMD+SHIFT+M',
-            },
-            // list: {
-            //     class: NestedList,
-            //     inlineToolbar: true,
-            //     config: {
-            //         defaultStyle: 'unordered'
-            //     },
+            tunes: ['textVariant'],
+            placeholder: 'Commence àcrire la publication ici!',
+            onReady: () => {console.log('Editor.js est prêt à commencer le taf')},
+            // onChange: (api, event) => {
+            //     console.log('Now I know that Editor\'s content changed!', event)
             // }
-            
-        },
-        tunes: ['textVariant'],
-        placeholder: 'Commence àcrire la publication ici!',
-        onReady: () => {console.log('Editor.js est prêt à commencer le taf')},
-        // onChange: (api, event) => {
-        //     console.log('Now I know that Editor\'s content changed!', event)
-        // }
-        data: data
+            data: data
 
-    })
+        })
 
         editor.isReady
         .then(() => {
@@ -129,7 +150,18 @@
         // .catch((reason) => {
         //     console.log(`Editor.js initialization failed because of ${reason}`)
         // });
-    })
+
+
+        const saveData = () => {
+            editor.save().then((outputData: any) => {
+            console.log('Article data: ', outputData)
+            }).catch((error:any) => {
+            console.log('Saving failed: ', error)
+            });
+            }
+    // })
 </script>
 
 <div id="editorjs"></div>
+
+<button on:click={saveData}>Save</button>
