@@ -15,7 +15,6 @@
   
 </script>
 <Router {url}>
-  <Header />
     <div>
       <Route path="/blog" component={Blog} />
       <Route path="/register" component={Register} />

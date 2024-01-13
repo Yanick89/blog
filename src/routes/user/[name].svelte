@@ -1,5 +1,6 @@
 <script lang="ts">
     import Side from "../../lib/account/side.svelte";
+    import Header from "../../lib/account/header.svelte";
     const watch = (count: number) =>{
         return count > 0 ? 'Publications' : 'Publication'
     }
@@ -7,6 +8,7 @@
     $: obersveCounte = watch(0)
 </script>
 
+<Header />
 <div class="container w-full max-w-7xl px-2 sm:px-6 lg:px-8 mx-auto flex">
     <div class="mt-6 border-t border-gray-100 space-y-12 w-full">
         <article class="flex items-start space-x-6 p-6">
