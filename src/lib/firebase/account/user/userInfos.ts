@@ -30,7 +30,6 @@ export const getUser = () => {
 }
 
 export const updateUser = async (currentData: User, updateData: User) => {
-    // let name = currentData.name
     updateData.name = currentData.name
     updateData.userName = currentData.userName
     updateData.imageUrl = currentData.imageUrl
@@ -40,5 +39,5 @@ export const updateUser = async (currentData: User, updateData: User) => {
     updateData.twitterX = currentData.twitterX
     updateData.youtube = currentData.youtube
     const userRef =  doc(db, "users", userId);
-    await updateDoc(userRef, {...updateData})    
+    await updateDoc(userRef, {...updateData})   
 }

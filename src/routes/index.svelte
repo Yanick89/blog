@@ -5,7 +5,7 @@
     import Header from '../lib/Header.svelte';
     import Top from '../lib/blog/topList.svelte';
     import CurrentList from '../lib/blog/currentList.svelte';
-    import Blog from './posts/blog.svelte'
+    import Blog from './posts/nouvelle-publication.svelte'
 
     // declarations
   let message: string = '',

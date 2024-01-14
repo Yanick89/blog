@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Blog from "./routes/posts/blog.svelte"
+  import Blog from "./routes/posts/nouvelle-publication.svelte"
   import Posts from './routes/posts/[id].svelte'
   import Page from "./routes/index.svelte";
   import Header from "./lib/Header.svelte";
