@@ -16,7 +16,12 @@ export const authSocialMedia = () =>{
             id: user.uid,
             imageUrl: user.photoURL,
             name: user.displayName,
-            userName: ''
+            userName: '',
+            aboutMe: '',
+            linkedin: '',
+            facebook: '',
+            twitterX: '',
+            youtube: ''
         })
         const name = user.displayName?.replace(' ', '-')
         navigate(`/user/${name}`, { replace: true });  

@@ -1,13 +1,29 @@
 <script lang="ts">
     import { createEventDispatcher } from 'svelte';
+    import { navigate } from 'svelte-routing';
+    import { getUser } from '../firebase/account/user/userInfos';
+    import { doc, setDoc, collection, Timestamp } from "firebase/firestore";
+    import { db } from "../firebase/firebase";
+
+    // declare props
     export let showDetails: boolean;
     export let title: string;
     export let editor: any;
-
+    
+    // declare variables
+    let userId: string;
+    let name: string;
     let tags: string[] = [];
     let tag: string = '';
+    let describe: string = '';
 
     const dispatch = createEventDispatcher();
+
+    getUser().then((user: any) => {
+        userId = user?.id as string;
+        name = user?.name.replace(" ", "-")
+    })
+
     const addTag = () =>{
         if(tags.length < 3 && tag !== ''){
             tags = [...tags, tag]
@@ -15,37 +31,39 @@
         tag = ''
     }
 
-    // const saveData = async () => {
-    //     editor.save().then(async(outputData: any) => {
-    //         const docRef = doc(collection(db, "publications"))
-    //         await setDoc(docRef, {
-    //         id: docRef.id,
-    //         authorId: userId,
-    //         createdAt: Timestamp.fromDate(new Date()),
-    //         content: outputData
-    //         })
-                            
-    //     }).catch((error:any) => {
-    //         console.log(error)
-    //     });
-    // }
-    
+    const removeTag = (tag: string) =>{
+        tags = tags.filter((t: string) => t !== tag)
+    }
+
     const saveData = async () => {
-        await editor.save().then((outputData: any) => {
-            console.log(outputData, 'test ', title);                                     
+        editor.save().then(async(outputData: any) => {
+            const docRef = doc(collection(db, "publications"))
+            await setDoc(docRef, {
+            id: docRef.id,
+            authorId: userId,
+            tags: tags,
+            title: title,
+            describe: describe,
+            createdAt: Timestamp.fromDate(new Date()),
+            content: outputData
+            }).then(() => {
+                title = '';
+                describe = '';
+                editor.clear()
+                dispatch('close', showDetails = false)
+                navigate(`/user/${name}`, { replace: true }); 
+            })
+                            
         }).catch((error:any) => {
             console.log(error)
         });
-        await editor.clear()
-        title = ''
     }
-
-    
+   
 </script>
 
 <div class="details h-screen w-full bg-white fixed top-0 left-0 right-0 bottom-0 z-20">
     <div class="mx-auto h-full max-w-7xl px-2 sm:px-6 lg:px-8">
-        <div class="flex justify-end">
+        <div class="flex justify-end mt-8">
             <button on:click={() => dispatch('close', showDetails = false)} class="text-gray-500  hover:bg-gray-300 hover:text-gray-400 rounded-md text-sm font-medium h-10 w-10 relative p-4">
                 <svg class="absolute -translate-x-2/4 -translate-y-2/4 top-2/4 left-2/4" width="18" height="18" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.7" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
@@ -70,7 +88,7 @@
                     </div>
                     <div class="w-full px-4 py-2 sm:grid sm:grid-cols-5 sm:gap-4 sm:px-0">
                         <div class="col-span-full">
-                            <textarea id="about" name="about" rows="3" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 placeholder:font-medium focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-3" placeholder="Ajouter une description"></textarea>
+                            <textarea bind:value={describe} id="about" name="about" rows="3" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 placeholder:font-medium focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-3" placeholder="Ajouter une description"></textarea>
                             <p class="text-sm leading-6 text-gray-400 font-medium text-right">pas plus 200 caractères</p>
                         </div>
                     </div>
@@ -78,14 +96,14 @@
                         <form on:submit|preventDefault={addTag}>
                             <input bind:value={tag} type="text" class="peer py-3 px-4 block w-full bg-gray-100 border-transparent rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-700 dark:border-transparent dark:text-gray-400 dark:focus:ring-gray-600" placeholder="Ajouter des tags">
                         </form>
-                        <div class="flex items-center flex-wrap">
+                        <div class="flex items-center flex-wrap gap-2 mt-3">
                             {#each tags as tag}
                                 <div class="flex">
-                                    <div class="flex flex-nowrap items-center relative z-10 bg-white border border-gray-200 rounded-md p-1 m-1 dark:bg-slate-900 dark:border-gray-700">
-                                        <div class="whitespace-nowra">{tag}</div>
-                                        <div class="inline-flex flex-shrink-0 justify-center items-center h-5 w-5 ms-2 rounded-full text-gray-800 bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 text-sm dark:bg-gray-700/50 dark:hover:bg-gray-700 dark:text-gray-400 cursor-pointer" data-remove="">
+                                    <div class="flex flex-nowrap items-center relative z-10 bg-white border border-gray-200 rounded-md p-1 my-1 dark:bg-slate-900 dark:border-gray-700">
+                                        <div class="whitespace-nowra font-medium text-sm">{tag}</div>
+                                        <button on:click={() => removeTag(tag)} class="inline-flex flex-shrink-0 justify-center items-center h-5 w-5 ms-2 rounded-full text-gray-800 bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 text-sm dark:bg-gray-700/50 dark:hover:bg-gray-700 dark:text-gray-400 cursor-pointer" data-remove="">
                                             <svg class="flex-shrink-0 w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
-                                        </div>
+                                        </button>
                                     </div>
                                 </div>
                             {/each}

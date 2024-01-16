@@ -15,31 +15,21 @@
         youtube: ''
     }
 
-        // update profile variables
-        let updateProfile: any = {
-            name: '',
-            userName: '',
-            imageUrl: '',
-            aboutMe: '',
-            linkedin: '',
-            facebook: '',
-            twitterX: '',
-            youtube: ''
-        }
-
     getUser().then((user: User) => {
-        datasUser.name = user?.name,
-        datasUser.userName = user?.userName,
-        datasUser.imageUrl = user?.imageUrl,
-        datasUser.aboutMe = user?.aboutMe,
-        datasUser.linkedin = user?.linkedin,
-        datasUser.facebook = user?.facebook,
-        datasUser.twitterX = user?.twitterX,
-        datasUser.youtube = user?.youtube
+        datasUser = {
+            name: user.name,
+            userName: user.userName,
+            imageUrl: user.imageUrl,
+            aboutMe: user.aboutMe,
+            linkedin: user.linkedin,
+            facebook: user.facebook,
+            twitterX: user.twitterX,
+            youtube: user.youtube
+        }
     })
 </script>
 
-<form on:submit|preventDefault={updateUser(datasUser, updateProfile)} class="flex flex-col md:flex-row container w-full mx-auto gap-5 max-w-3xl">
+<form on:submit|preventDefault class="flex flex-col md:flex-row container w-full mx-auto gap-5 max-w-3xl">
     <div class="col-span-full basis-[20%] bg-white border-r">
         <h2 class="text-base font-semibold leading-7 text-gray-900 mt-3 text-center">Profile</h2>
         
@@ -125,7 +115,7 @@
             </div>
         </div>   
         <div class="mb-6 flex items-center justify-end gap-x-6">
-            <button on:click={updateUser} class="bg-gray-700 text-white hover:bg-gray-500 rounded-md px-3 py-2 text-sm font-medium">Modifier</button>
+            <button on:click={()=>{ updateUser(datasUser)}} class="bg-gray-700 text-white hover:bg-gray-500 rounded-md px-3 py-2 text-sm font-medium">Modifier</button>
         </div>
     </div>
 </form>

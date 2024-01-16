@@ -1,7 +1,7 @@
 
 import { auth, db } from "../../firebase"
 import { onAuthStateChanged } from "firebase/auth"
-import { getDocs, collection, doc, updateDoc } from "firebase/firestore"
+import { getDocs, collection, doc, updateDoc  } from "firebase/firestore"
 import type { User } from "../../../../table"
 
 let userId: string
@@ -29,15 +29,6 @@ export const getUser = () => {
     });
 }
 
-export const updateUser = async (currentData: User, updateData: User) => {
-    updateData.name = currentData.name
-    updateData.userName = currentData.userName
-    updateData.imageUrl = currentData.imageUrl
-    updateData.aboutMe = currentData.aboutMe
-    updateData.linkedin = currentData.linkedin
-    updateData.facebook = currentData.facebook
-    updateData.twitterX = currentData.twitterX
-    updateData.youtube = currentData.youtube
-    const userRef =  doc(db, "users", userId);
-    await updateDoc(userRef, {...updateData})   
+export const updateUser = async (updateData: Partial<User>) => {
+    await updateDoc  (doc(db, "users", userId), updateData);
 }

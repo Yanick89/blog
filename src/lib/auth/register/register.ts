@@ -15,7 +15,12 @@ export function Register() {
                 id: user.uid,
                 imageUrl: '',
                 name: name,
-                userName: ''
+                userName: '',
+                aboutMe: '',
+                linkedin: '',
+                facebook: '',
+                twitterX: '',
+                youtube: ''
             });
             navigate(`/user/${name}`, { replace: true });         
         })

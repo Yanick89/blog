@@ -54,11 +54,12 @@
 
 <div id="editorjs">
     <div class="mx-auto w-full max-w-[650px]">
-        <input bind:value={title} class="cursor-text w-full text-4xl font-medium my-5 border-0 focus:ring-0" type="text" placeholder="Titre">
+        <input bind:value={title} class="cursor-text w-full text-4xl font-medium my-5 outline-none h-14" type="text" placeholder="Titre">
     </div>
 </div>
 {#if showDetails}
     <Publication {showDetails} {editor} {title} on:close={() => showDetails = !showDetails}/>
 {/if}
+
 
 
