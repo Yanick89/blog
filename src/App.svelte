@@ -1,9 +1,10 @@
 <script lang="ts">
-  import Blog from "./routes/posts/blog.svelte"
+  import Blog from "./routes/posts/nouvelle-publication.svelte"
   import Posts from './routes/posts/[id].svelte'
   import Page from "./routes/index.svelte";
   import Header from "./lib/Header.svelte";
   import Register from "./routes/register.svelte";
+  import SignIn from "./routes/signIn.svelte";
   import Profil from "./routes/user/[name].svelte";
   import EditProfil from "./routes/setting/edit-profil.svelte";
   import "../index.css"
@@ -14,11 +15,11 @@
   
 </script>
 <Router {url}>
-  <Header />
     <div>
       <Route path="/blog" component={Blog} />
       <Route path="/register" component={Register} />
-      <Route path="/user/profil" component={Profil} />
+      <Route path="/signIn" component={SignIn} />
+      <Route path="/user/:name" component={Profil} />
       <Route path="/setting/edit-profil" component={EditProfil} />
       <Route path="/" component={Page} />
     </div>
