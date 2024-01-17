@@ -9,6 +9,7 @@
     export let showDetails: boolean;
     export let title: string;
     export let editor: any;
+    export let imgageUrl: string;
     
     // declare variables
     let userId: string;
@@ -52,12 +53,12 @@
                 editor.clear()
                 dispatch('close', showDetails = false)
                 navigate(`/user/${name}`, { replace: true }); 
-            })
-                            
+            })                           
         }).catch((error:any) => {
             console.log(error)
         });
     }
+   console.log('image url', imgageUrl);
    
 </script>
 
