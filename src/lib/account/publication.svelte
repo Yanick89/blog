@@ -76,9 +76,15 @@
             <div class="flex justify-center items-start flex-col h-full gap-0 md:flex-row md:gap-10 my-[5%]">
                 <div class="w-full lg:w-1/3">
                     <h2 class="text-xl leading-6 text-slate-500 font-medium mb-2">Prévisualisation</h2>
+                    {#if imgageUrl}
+                    <div class="relative rounded-xl overflow-hidden h-[200px] bg-slate-400">
+                        <img class="w-full h-full object-cover rounded-xl" src={imgageUrl} alt="">
+                    </div>
+                    {:else}
                     <div class="relative rounded-xl overflow-hidden h-[200px] bg-slate-400">
                         <img class="w-full h-full object-cover rounded-xl" src="https://images.unsplash.com/photo-1586232702178-f044c5f4d4b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1035&q=80" alt="">
                     </div>
+                    {/if}
                     <h3 class="text-lg leading-6 text-slate-500 font-medium mt-5">{title}</h3>
                 </div>
                 <div class="w-full lg:w-1/3 pt-5">
