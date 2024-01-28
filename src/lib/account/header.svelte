@@ -2,9 +2,9 @@
     import { Link } from "svelte-routing";
     import Profil from "./profile.svelte";
     export let url:any;
-    export let title: string;
     export let showDetails: boolean; 
-    export let showPublication: any;     
+    export let showPublication: any;    
+    export let watchData: any; 
        
 </script>
 
@@ -15,7 +15,7 @@
             </Link>
         <div class="flex items-center gap-3">
             {#if url}
-            <button on:click={showPublication}  disabled={!title} class={!title ? "opacity-50 cursor-not-allowed flex w-full justify-center rounded-md bg-gray-400 px-3 py-1.5 text-sm font-semibold leading-6" : "flex w-full justify-center rounded-md bg-gray-700 hover:bg-gray-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"}>
+            <button on:click={showPublication}  disabled={!watchData} class={!watchData ? "opacity-50 flex w-full justify-center rounded-md bg-gray-400 px-3 py-1.5 text-sm font-semibold leading-6 cursor-none" : "flex w-full justify-center rounded-md bg-gray-700 hover:bg-gray-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"}>
                 Publier
             </button>
             {:else}

@@ -9,7 +9,7 @@
     export let showDetails: boolean;
     export let title: string;
     export let editor: any;
-    export let imgageUrl: string;
+    export let imageUrl: string;
     
     // declare variables
     let userId: string;
@@ -58,7 +58,14 @@
             console.log(error)
         });
     }
-   console.log('image url', imgageUrl);
+   
+    // const saveData = () =>{
+    //     editor.save().then((outputData: any) => {
+    //         console.log('Article data: ', outputData)
+    //         }).catch((error: any) => {
+    //         console.log('Saving failed: ', error)
+    //         });
+    // }
    
 </script>
 
@@ -76,9 +83,9 @@
             <div class="flex justify-center items-start flex-col h-full gap-0 md:flex-row md:gap-10 my-[5%]">
                 <div class="w-full lg:w-1/3">
                     <h2 class="text-xl leading-6 text-slate-500 font-medium mb-2">Prévisualisation</h2>
-                    {#if imgageUrl}
+                    {#if imageUrl}
                     <div class="relative rounded-xl overflow-hidden h-[200px] bg-slate-400">
-                        <img class="w-full h-full object-cover rounded-xl" src={imgageUrl} alt="">
+                        <img class="w-full h-full object-cover rounded-xl" src={imageUrl} alt="">
                     </div>
                     {:else}
                     <div class="relative rounded-xl overflow-hidden h-[200px] bg-slate-400">
