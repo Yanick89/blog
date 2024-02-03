@@ -6,7 +6,8 @@
     
     let url: any = window.location.pathname,
         title: string = '',
-        imageUrl: string = '',
+        preview: string = '',
+        imagePublication: any = '',
         inputFile: any = '',
         showDetails: boolean = false,
         editor: any;
@@ -17,17 +18,18 @@
 
     const imageSelected = (e:any) =>{
       const fileList: any = e.target.files;
+      imagePublication = fileList[0];
       for (const file of fileList) {
           const image = URL.createObjectURL(file);
-          imageUrl = image
+          preview = image
         }           
     }
 
-    const observeData = (title: string, imageUrl: string) =>{
-      return title !== '' ? true : false || imageUrl !== '' ? true : false
+    const observeData = (title: string, preview: string) =>{
+      return title !== '' ? true : false || preview !== '' ? true : false
     }
 
-    $: watchData =  observeData(title, imageUrl)
+    $: watchData =  observeData(title, preview)
     
     editor = new EditorJS({
         holder: 'editorjs',
@@ -55,20 +57,20 @@
         <div class="img-photo">
             <div class="container-img">
               <div class="relative h-full w-full">
-                <label for="imageUrl" class={ imageUrl === '' ? "flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600" : "absolute top-1/2 -translate-x-1/2 -translate-y-1/2 left-1/2 z-10 h-full w-full changer cursor-pointer"}>
+                <label for="preview" class={ preview === '' ? "flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600" : "absolute top-1/2 -translate-x-1/2 -translate-y-1/2 left-1/2 z-10 h-full w-full changer cursor-pointer"}>
                   <div class="flex flex-col items-center justify-center pt-5 pb-6 content">
                       <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
                           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
                       </svg>
-                      <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">{imageUrl !== '' ? 'Changer l\'image' : 'Ajouter une image'} de publication</p>
+                      <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">{preview !== '' ? 'Changer l\'image' : 'Ajouter une image'} de publication</p>
                       <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF </p>
                   </div>
-                  <input type="file" id="imageUrl" class="my-image hidden" accept=".jpg, .jpeg, .png, .gif, .webp, image/*"  on:change={(e)=>imageSelected(e)} bind:this={inputFile} />
+                  <input type="file" id="preview" class="my-image hidden" accept=".jpg, .jpeg, .png, .gif, .webp, image/*"  on:change={(e)=>imageSelected(e)} bind:this={inputFile} />
                 </label>
-                {#if imageUrl}
+                {#if preview}
                   <div class="w-full min-h-[400px] relative my-5 z-0">
                     <!-- svelte-ignore a11y-img-redundant-alt -->
-                    <img class="w-full h-full object-cover absolute left-0 top-0 aspect-square rounded-md" src={imageUrl} alt="photo de publication" />
+                    <img class="w-full h-full object-cover absolute left-0 top-0 aspect-square rounded-md" src={preview} alt="photo de publication" />
                   </div>
                 {/if}
               </div>
@@ -79,7 +81,7 @@
 </div>
 
 {#if showDetails}
-    <Publication {showDetails} {editor} {title} {imageUrl} on:close={() => showDetails = !showDetails}/>
+    <Publication {showDetails} {editor} {title} {imagePublication} {preview} on:close={() => showDetails = !showDetails}/>
 {/if}
 
 <style>

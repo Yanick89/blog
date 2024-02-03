@@ -2,6 +2,7 @@
     import { createEventDispatcher } from 'svelte';
     import { navigate } from 'svelte-routing';
     import { getUser } from '../firebase/account/user/userInfos';
+    import { createPublication } from '../publication/crudPublication';
     import { doc, setDoc, collection, Timestamp } from "firebase/firestore";
     import { db } from "../firebase/firebase";
 
@@ -9,14 +10,23 @@
     export let showDetails: boolean;
     export let title: string;
     export let editor: any;
-    export let imageUrl: string;
+    export let preview: string;
+    export let imagePublication: any;
     
-    // declare variables
+    // Init variables
     let userId: string;
     let name: string;
     let tags: string[] = [];
     let tag: string = '';
     let describe: string = '';
+
+    let dataPublication: any = {
+        title: title,
+        imagePublication: imagePublication,
+        tags: tags,
+        describe: describe
+    };
+    
 
     const dispatch = createEventDispatcher();
 
@@ -36,40 +46,32 @@
         tags = tags.filter((t: string) => t !== tag)
     }
 
-    const saveData = async () => {
-        editor.save().then(async(outputData: any) => {
-            const docRef = doc(collection(db, "publications"))
-            await setDoc(docRef, {
-            id: docRef.id,
-            authorId: userId,
-            tags: tags,
-            title: title,
-            describe: describe,
-            createdAt: Timestamp.fromDate(new Date()),
-            content: outputData
-            }).then(() => {
-                title = '';
-                describe = '';
-                editor.clear()
-                dispatch('close', showDetails = false)
-                navigate(`/user/${name}`, { replace: true }); 
-            })                           
-        }).catch((error:any) => {
-            console.log(error)
-        });
-    }
-   
-    // const saveData = () =>{
-    //     editor.save().then((outputData: any) => {
-    //         console.log('Article data: ', outputData)
-    //         }).catch((error: any) => {
-    //         console.log('Saving failed: ', error)
-    //         });
+    // const saveData = async () => {
+    //     editor.save().then(async(outputData: any) => {
+    //         const docRef = doc(collection(db, "publications"))
+    //         await setDoc(docRef, {
+    //         id: docRef.id,
+    //         authorId: userId,
+    //         tags: tags,
+    //         title: title,
+    //         describe: describe,
+    //         createdAt: Timestamp.fromDate(new Date()),
+    //         content: outputData
+    //         }).then(() => {
+    //             title = '';
+    //             describe = '';
+    //             editor.clear()
+    //             dispatch('close', showDetails = false)
+    //             navigate(`/user/${name}`, { replace: true }); 
+    //         })                           
+    //     }).catch((error:any) => {
+    //         console.log(error)
+    //     });
     // }
-   
+
 </script>
 
-<div class="details h-screen w-full bg-white fixed top-0 left-0 right-0 bottom-0 z-20">
+<div class="details min-h-screen w-full bg-white fixed top-0 left-0 right-0 bottom-0 z-20">
     <div class="mx-auto h-full max-w-7xl px-2 sm:px-6 lg:px-8">
         <div class="flex justify-end mt-8">
             <button on:click={() => dispatch('close', showDetails = false)} class="text-gray-500  hover:bg-gray-300 hover:text-gray-400 rounded-md text-sm font-medium h-10 w-10 relative p-4">
@@ -83,9 +85,9 @@
             <div class="flex justify-center items-start flex-col h-full gap-0 md:flex-row md:gap-10 my-[5%]">
                 <div class="w-full lg:w-1/3">
                     <h2 class="text-xl leading-6 text-slate-500 font-medium mb-2">Prévisualisation</h2>
-                    {#if imageUrl}
+                    {#if preview}
                     <div class="relative rounded-xl overflow-hidden h-[200px] bg-slate-400">
-                        <img class="w-full h-full object-cover rounded-xl" src={imageUrl} alt="">
+                        <img class="w-full h-full object-cover rounded-xl" src={preview} alt="">
                     </div>
                     {:else}
                     <div class="relative rounded-xl overflow-hidden h-[200px] bg-slate-400">
@@ -103,8 +105,9 @@
                     <div class="w-full px-4 py-2 sm:grid sm:grid-cols-5 sm:gap-4 sm:px-0">
                         <div class="col-span-full">
                             <textarea bind:value={describe} id="about" name="about" rows="3" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 placeholder:font-medium focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-3" placeholder="Ajouter une description"></textarea>
-                            <p class="text-sm leading-6 text-gray-400 font-medium text-right">pas plus 200 caractères</p>
+                            <p class="text-sm leading-6 text-gray-400 font-medium text-right">pas plus {describe.length}/200 caractères</p>
                         </div>
+                        {describe}
                     </div>
                     <div class="w-full px-4 py-2 sm:px-0">
                         <form on:submit|preventDefault={addTag}>
@@ -123,7 +126,7 @@
                             {/each}
                         </div>
                     </div>
-                    <button on:click={saveData} class="inline-block rounded-md bg-gray-700 hover:bg-gray-500 px-8 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                    <button on:click={()=>{createPublication({...dataPublication, describe, tags, userId}, editor, imagePublication, name)}} class="inline-block rounded-md bg-gray-700 hover:bg-gray-500 px-8 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                         Publier
                     </button>
                 </div>
