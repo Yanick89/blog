@@ -18,6 +18,17 @@ export interface User{
   youtube?: string
 }
 
+export interface Publication{
+  id: string,
+  userId: string,
+  title?: string,
+  imagePublication?: any,
+  content: any,
+  tags?: string[],
+  describe?: string,
+  date: string
+}
+
 export function UseTableData () {
     const blogs = <IsBlogs[]> [
         {

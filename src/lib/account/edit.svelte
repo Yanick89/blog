@@ -1,7 +1,10 @@
 <script lang="ts">
-    import type { User } from "../../table";
     import { getUser, updateUser } from "../firebase/account/user/userInfos";
     import PhotoProfile from "./photoProfile.svelte";
+    
+    let inputFile : any;
+    let imageUrl: any = '';
+    let imageName : any = ''
 
     // profile object
     let datasUser: any = {
@@ -15,7 +18,7 @@
         youtube: ''
     }
 
-    getUser().then((user: User) => {
+    getUser().then((user: any) => {
         datasUser = {
             name: user.name,
             userName: user.userName,
@@ -27,17 +30,26 @@
             youtube: user.youtube
         }
     })
+
+    const imageSelected = (e:any) =>{
+      const fileList: File = e.target.files[0];
+      imageName = fileList
+      imageUrl = URL.createObjectURL(fileList);
+
+    }          
 </script>
 
 <form on:submit|preventDefault class="flex flex-col md:flex-row container w-full mx-auto gap-5 max-w-3xl">
     <div class="col-span-full basis-[20%] bg-white border-r">
-        <h2 class="text-base font-semibold leading-7 text-gray-900 mt-3 text-center">Profile</h2>
-        
-        <div class="flex flex-col items-center gap-x-3">
-            <div class="h-28 w-28">
-                <PhotoProfile />
+        <h2 class="text-base font-semibold leading-7 text-gray-900 mt-3 text-center">Profile</h2>        
+        <div class="flex flex-col items-center gap-2">
+            <div class="h-24 w-24 rounded-full relative container-profil overflow-hidden"> <!--- bg-[#d1d5db] --->
+                <PhotoProfile {imageUrl} />
+                <label for="imageUrl" class="absolute top-0 left-0 h-full w-full z-10 rounded-full cursor-pointer flex justify-center items-center">
+                    <div class="flex justify-center items-center w-full h-full rounded-full font-medium change text-sm">Modifier</div>
+                    <input type="file" id="imageUrl" class="my-image hidden" accept="image/*" on:change={(e)=>imageSelected(e)} bind:this={inputFile}/>
+                </label>
             </div>
-            <button type="button" class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Change</button>
         </div>
     </div>
     <div class="space-y-12 w-full">
@@ -114,9 +126,26 @@
             </div>
             </div>
         </div>   
-        <div class="mb-6 flex items-center justify-end gap-x-6">
-            <button on:click={()=>{ updateUser(datasUser)}} class="bg-gray-700 text-white hover:bg-gray-500 rounded-md px-3 py-2 text-sm font-medium">Modifier</button>
+        <div class="flex items-center justify-end gap-x-6">
+            <button on:click={()=>{ updateUser(datasUser, imageName)}} class="bg-gray-700 text-white mb-6 hover:bg-gray-500 rounded-md px-3 py-2 text-sm font-medium">Modifier</button>
         </div>
     </div>
 </form>
-  
+
+<style>
+    .change{
+        display: none;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        transition: all 0.5s ease;
+    }
+    .container-profil:hover .change{
+        display: block;
+        transition: background 0.5s ease;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>

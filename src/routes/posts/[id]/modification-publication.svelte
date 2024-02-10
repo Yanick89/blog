@@ -1,24 +1,46 @@
 <script lang="ts">
-    import HeaderNav from "../../lib/account/header.svelte"
-    import Publication from "../../lib/account/publication.svelte"
-    import EditorJS from '@editorjs/editorjs'
-    import {toolsEditor, dataEditor} from "../../lib/editor/editorDatas"
-    
+    import HeaderNav from "../../../lib/account/header.svelte";
+    import EditorJS from '@editorjs/editorjs';
+    import { toolsEditor } from "../../../lib/editor/editorDatas";
+    import { getPublicationAuthor } from "../../../lib/publication/crudPublication";
+    import Publication from "../../../lib/account/publication.svelte";
+
+    export let id: string;
+
     let url: string = window.location.pathname,
         title: string = '',
         preview: string = '',
         imagePublication: any = '',
+        content: any,
         inputFile: any = '',
         describe: string = '',
         tags: string[] = [],
         showDetails: boolean = false,
         editor: any,
-        valueButton: string = 'Publier';
+        valueButton: string = 'Modifier',
+        publications: any;
 
-    $: showPublication = () =>{
-        showDetails = !showDetails
-    }
-
+    getPublicationAuthor().then((data: any) => {
+        data.forEach((publication: any) =>{
+            if(publication.id === id){
+                title = publication.title,
+                preview = publication.imagePublication,
+                imagePublication = publication.imagePublication,
+                content = publication.content,
+                describe = publication.describe,
+                tags = publication.tags;  
+                editor = new EditorJS({
+                    holder: 'editorjs',
+                    autofocus: true,
+                    tools: toolsEditor,
+                    tunes: ['textVariant'],
+                    placeholder: 'Commence La rédaction de votre publication ici!',
+                    data: content,
+                });                  
+            }
+        })
+    })      
+    
     const imageSelected = (e:any) =>{
       const fileList: any = e.target.files;
       imagePublication = fileList[0];
@@ -28,28 +50,16 @@
         }           
     }
 
+    $: showPublication = () =>{
+        showDetails = !showDetails
+    };
+
     const observeData = (title: string, preview: string) =>{
       return title !== '' ? true : false || preview !== '' ? true : false
-    }
+    };
 
-    $: watchData =  observeData(title, preview)
+    $: watchData =  observeData(title, preview);
     
-    editor = new EditorJS({
-        holder: 'editorjs',
-        autofocus: true,
-        tools: toolsEditor,
-        tunes: ['textVariant'],
-        placeholder: 'Commence La rédaction de votre publication ici!',
-        data: dataEditor,
-    });
-
-    editor.isReady
-    .then(() => {
-        console.log('Editor.js is ready to work!')
-    })
-    .catch((reason:any) => {
-        console.log(reason)
-    });
 </script>
 
 <HeaderNav {watchData} {showDetails} {url} {showPublication} {valueButton}/>
@@ -84,8 +94,5 @@
 </div>
 
 {#if showDetails}
-    <Publication {showDetails} {editor} {title} {imagePublication} {preview} {describe} {tags} on:close={() => showDetails = !showDetails}/>
+    <Publication {showDetails} {editor} {title} {imagePublication} {preview} {describe} {tags} {url} {id} on:close={() => showDetails = !showDetails}/>
 {/if}
-
-
-

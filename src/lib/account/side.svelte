@@ -4,6 +4,7 @@
     import PhotoProfile from "./photoProfile.svelte";
 
     export let obersveCounte: number;
+    export let publications: [];
 
     // profile variables
     let name: string = '',
@@ -13,6 +14,7 @@
         facebook: string = '',
         twitterX: string = '',
         youtube: string = '';
+    
 
     getUser().then((user: any) => {
         name = user?.name
@@ -24,12 +26,11 @@
         youtube = user?.youtube
     })
 
-     
 </script>
 
 
 <div class="w-full ml-5 flex flex-col items-start gap-y-3">
-    <div>  
+    <div class="flex flex-col items-center">  
         <div class="w-20 h-20">
             <PhotoProfile />
         </div>
@@ -40,7 +41,7 @@
         {/if}
     </div>
     <span class="text-slate-500 font-normal text-base ml-3">{name}</span>
-    <span class="text-slate-500 font-normal text-base ml-3">0 {obersveCounte}</span>
+    <span class="text-slate-500 font-normal text-base ml-3">{publications.length} {obersveCounte}</span>
     <a href="/setting/edit-profil" class="text-gray-500 bg-gray-200 hover:bg-gray-300 hover:text-white rounded-md px-3 py-2 text-sm font-medium ml-3">Modifier</a>
     
     {#if youtube || linkedin || facebook || twitterX}

@@ -1,17 +1,16 @@
 <script lang="ts">
     import { getUser } from "../firebase/account/user/userInfos";
-    export let imageUrl: string = '';
-       
+
+    export let imageUrl: string;
+
     getUser().then((user: any) => {
         imageUrl = user?.imageUrl
     })
 </script>
-
-
-    <button type="button" class="inline-flex justify-center items-center gap-1 text-sm  rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+    <button type="button" class="relative h-full w-full rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
         {#if imageUrl}
         <span class="rounded-full overflow-hidden border-2">
-            <img src="{imageUrl}" alt="" class="w-full h-full object-cover">
+            <img src="{imageUrl}" alt="" class="absolute top-0 left-0 w-full h-full rounded-full object-cover">
         </span>
         {:else}
         <svg class="h-full w-full text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -19,3 +18,4 @@
         </svg>
         {/if}
     </button>
+

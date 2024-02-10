@@ -18,10 +18,17 @@ import Underline from '@editorjs/underline';
 import CodeTool from '@editorjs/code';
 import TextVariantTune from '@editorjs/text-variant-tune';
 import Embed from '@editorjs/embed';
+import SimpleImageLink from '../simpleImage/simpleImage'
 
 export const toolsEditor: any = {
     textVariant: TextVariantTune,
-    image: SimpleImage,
+    imageLink: {
+        class: SimpleImageLink,
+        inlineToolBar: ['link']
+    },
+    image: {
+        class: SimpleImage
+    },
     delimiter: Delimiter,
     underline: Underline,
     // code : editorjsCodeflask,
