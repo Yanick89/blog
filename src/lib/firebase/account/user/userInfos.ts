@@ -43,5 +43,4 @@ export const updateUser = async (updateData: Partial<User>, imageUrl: File) => {
     }), (error: any) => {
         console.log(error);
     };
-    // await updateDoc (doc(db, "users", userId), updateData);    
 }

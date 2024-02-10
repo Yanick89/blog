@@ -20,13 +20,13 @@ export interface User{
 
 export interface Publication{
   id: string,
-  authorId: string,
+  userId: string,
   title?: string,
-  imagePublication?: string,
+  imagePublication?: any,
   content: any,
   tags?: string[],
   describe?: string,
-  createdAt: string
+  date: string
 }
 
 export function UseTableData () {

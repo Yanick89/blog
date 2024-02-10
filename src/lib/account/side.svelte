@@ -6,7 +6,6 @@
     export let obersveCounte: number;
     export let publications: [];
 
-
     // profile variables
     let name: string = '',
         userName: string ='',
@@ -27,12 +26,11 @@
         youtube = user?.youtube
     })
 
-     
 </script>
 
 
 <div class="w-full ml-5 flex flex-col items-start gap-y-3">
-    <div>  
+    <div class="flex flex-col items-center">  
         <div class="w-20 h-20">
             <PhotoProfile />
         </div>

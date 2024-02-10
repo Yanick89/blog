@@ -1,10 +1,8 @@
 <script lang="ts">
     import { createEventDispatcher } from 'svelte';
-    import { navigate } from 'svelte-routing';
     import { getUser } from '../firebase/account/user/userInfos';
-    import { createPublication } from '../publication/crudPublication';
-    import { doc, setDoc, collection, Timestamp } from "firebase/firestore";
-    import { db } from "../firebase/firebase";
+    import { createPublication, updatePublication } from '../publication/crudPublication';
+    import ErrorMessage from '../component/errorMessage.svelte';
 
     // declare props
     export let showDetails: boolean;
@@ -12,22 +10,24 @@
     export let editor: any;
     export let preview: string;
     export let imagePublication: any;
+    export let tags: string[] = [];
+    export let describe: string = ''
+    export let url: string = '';
+    export let id: string = '';
+    
     
     // Init variables
     let userId: string;
     let name: string;
-    let tags: string[] = [];
     let tag: string = '';
-    let describe: string = '';
+    let value: string = '';
 
     let dataPublication: any = {
-        title: title,
         imagePublication: imagePublication,
         tags: tags,
         describe: describe
     };
     
-
     const dispatch = createEventDispatcher();
 
     getUser().then((user: any) => {
@@ -46,28 +46,6 @@
         tags = tags.filter((t: string) => t !== tag)
     }
 
-    // const saveData = async () => {
-    //     editor.save().then(async(outputData: any) => {
-    //         const docRef = doc(collection(db, "publications"))
-    //         await setDoc(docRef, {
-    //         id: docRef.id,
-    //         authorId: userId,
-    //         tags: tags,
-    //         title: title,
-    //         describe: describe,
-    //         createdAt: Timestamp.fromDate(new Date()),
-    //         content: outputData
-    //         }).then(() => {
-    //             title = '';
-    //             describe = '';
-    //             editor.clear()
-    //             dispatch('close', showDetails = false)
-    //             navigate(`/user/${name}`, { replace: true }); 
-    //         })                           
-    //     }).catch((error:any) => {
-    //         console.log(error)
-    //     });
-    // }
 
 </script>
 
@@ -104,10 +82,12 @@
                     </div>
                     <div class="w-full px-4 py-2 sm:grid sm:grid-cols-5 sm:gap-4 sm:px-0">
                         <div class="col-span-full">
-                            <textarea bind:value={describe} id="about" name="about" rows="3" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 placeholder:font-medium focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-3" placeholder="Ajouter une description"></textarea>
-                            <p class="text-sm leading-6 text-gray-400 font-medium text-right">pas plus {describe.length}/200 caractères</p>
+                            <textarea bind:value={describe} id="about" name="about" rows="3" maxlength="120" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 placeholder:font-medium focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-3" placeholder="Ajouter une description"></textarea>
+                            {#if describe.length === 120}
+                                <ErrorMessage value={`La longueur maximum de caractères est de ${describe.length}`} /> 
+                            {/if}
+                            <p class="text-sm leading-6 text-gray-400 font-medium text-right">{describe.length}/120 caractères</p>
                         </div>
-                        {describe}
                     </div>
                     <div class="w-full px-4 py-2 sm:px-0">
                         <form on:submit|preventDefault={addTag}>
@@ -125,10 +105,20 @@
                                 </div>
                             {/each}
                         </div>
+                        {#if tags.length === 3 && tag.length !== 0}
+                            <ErrorMessage value={`Le nombre de tags est limité a ${tags.length}`} />
+                        {/if}
                     </div>
-                    <button on:click={()=>{createPublication({...dataPublication, describe, tags, userId}, editor, imagePublication, name)}} class="inline-block rounded-md bg-gray-700 hover:bg-gray-500 px-8 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                        Publier
-                    </button>
+                    {#if url}
+                        <button on:click={()=>{updatePublication({...dataPublication, describe, tags, userId}, editor, title, id)}} class="inline-block rounded-md bg-gray-700 hover:bg-gray-500 px-8 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                            Modifier
+                        </button> 
+                    {:else}
+                        <button on:click={()=>{createPublication({...dataPublication, describe, tags, userId}, editor, imagePublication, name)}} 
+                            class="inline-block rounded-md bg-gray-700 hover:bg-gray-500 px-8 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                            Publier
+                        </button>
+                    {/if}
                 </div>
             </div>
         </div>

@@ -6,6 +6,7 @@
   import Register from "./routes/register.svelte";
   import SignIn from "./routes/signIn.svelte";
   import Profil from "./routes/user/[name].svelte";
+  import Modification from "./routes/posts/[id]/modification-publication.svelte";
   import EditProfil from "./routes/setting/edit-profil.svelte";
   import "../index.css"
   import { Router, Route } from "svelte-routing";
@@ -24,6 +25,13 @@
       <Route path="/" component={Page} />
     </div>
     <div>
+       <Route path="/posts/:id/modification-publication" let:params>
+          {#if params.id}
+          <Modification id="{params.id}"/>
+          {:else}
+            <p>Article non trouvé</p>
+          {/if}
+        </Route>
        <Route path="/blog/:id" let:params>
           {#if params.id}
           <Posts id="{params.id}"/>
